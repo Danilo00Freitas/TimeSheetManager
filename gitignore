@@ -1,0 +1,35 @@
+# Arquivos de compilação
+*.class
+
+# Arquivos de construção do Maven
+target/
+
+# Arquivos de construção do Gradle
+build/
+.gradle/
+
+# Arquivos de configuração do IDE Eclipse
+.settings/
+
+# Arquivos de configuração do IDE IntelliJ IDEA
+.idea/
+
+# Cache do IDE
+*.iml
+*.ipr
+*.iws
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.swp
+
+# Dependências geradas automaticamente pelo Maven
+dependency-reduced-pom.xml
+.mvn/
+
+# Outros arquivos temporários
+*.bak
+*.~    
