@@ -57,7 +57,7 @@ public class LoginScreen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // COLOCAR AÇÃO
+                screenManager.showPersonalDataRegisterScreen();
             }
         });
 
