@@ -12,6 +12,7 @@ public class LoginScreen extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
+    private JButton registerButton;
     private ScreenManager screenManager;
 
     public LoginScreen(ScreenManager screenManager) {
@@ -21,13 +22,13 @@ public class LoginScreen extends JFrame {
         // Criando armação principal
         setTitle("TimeSheet Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 150);
+        setSize(500, 300);
         setLocationRelativeTo(null); // Centralizar a janela na tela
         setResizable(false);
 
         // Criando painel principal onde os componentes vão ficar
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(3, 1));
+        mainPanel.setLayout(new GridLayout(4, 1));
         getContentPane().add(mainPanel);
 
         // Campo de entrada para o nome de usuário
@@ -49,6 +50,18 @@ public class LoginScreen extends JFrame {
                 screenManager.showMenuScreen();
             }
         });
+
+        // Botão para cadastro
+        registerButton = new JButton("Realizar cadastro");
+        mainPanel.add(registerButton);
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // COLOCAR AÇÃO
+            }
+        });
+
+
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Encerrar a aplicação quando a janela de login for fechada
         setVisible(true);

@@ -1,7 +1,6 @@
 package TimeSheetApp.FrontEnd;
 
 import TimeSheetApp.BackEnd.ScreenManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
