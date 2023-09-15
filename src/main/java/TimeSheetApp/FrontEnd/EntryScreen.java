@@ -43,6 +43,7 @@ public class EntryScreen extends JFrame {
         dateTextF.setHorizontalAlignment(SwingConstants.CENTER);
         timetextF.setFont(font);
         timetextF.setHorizontalAlignment(SwingConstants.CENTER);
+        setLocationRelativeTo(null);
 
         // Criar e configurar o JFrame
         setTitle("TimeSheetApp");

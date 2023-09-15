@@ -1,4 +1,5 @@
 package TimeSheetApp.BackEnd;
+
 import javax.swing.JTextField;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +19,7 @@ public class PersonalizedTimer {
         dateTxt.setText(dateFormat.format(new Date()));
     }
 
-    public String getDate(){
+    public String getDate() {
         return dateTxt.getText();
     }
 

@@ -24,11 +24,11 @@ public class ScreenManager {
         timeSheetManager = new TimeSheetManager();
         menuScreen = new MenuScreen(this);
         entryScreen = new EntryScreen(this, timeSheetManager);
-        changeEntryScreen = new ChangeEntryScreen(this,timeSheetManager);
+        changeEntryScreen = new ChangeEntryScreen(this, timeSheetManager);
         loginScreen = new LoginScreen(this);
         personalDataRegisterScreen = new PersonalDataRegisterScreen(this);
         addressDataRegisterScreen = new AddressDataRegisterScreen(this);
-        loginDataRegisterScreen =  new LoginDataRegisterScreen(this);
+        loginDataRegisterScreen = new LoginDataRegisterScreen(this);
     }
 
     public void showMenuScreen() {
@@ -64,7 +64,7 @@ public class ScreenManager {
 
     }
 
-    public void showLoginScreen(){
+    public void showLoginScreen() {
         loginScreen.setVisible(true);
         entryScreen.setVisible(false);
         addressDataRegisterScreen.setVisible(false);
@@ -74,7 +74,7 @@ public class ScreenManager {
         loginDataRegisterScreen.setVisible(false);
     }
 
-    public void showPersonalDataRegisterScreen(){
+    public void showPersonalDataRegisterScreen() {
         loginScreen.setVisible(false);
         entryScreen.setVisible(false);
         addressDataRegisterScreen.setVisible(false);
@@ -83,7 +83,8 @@ public class ScreenManager {
         changeEntryScreen.setVisible(false);
         loginDataRegisterScreen.setVisible(false);
     }
-    public void showAddressDataRegisterScreen(){
+
+    public void showAddressDataRegisterScreen() {
         loginScreen.setVisible(false);
         entryScreen.setVisible(false);
         addressDataRegisterScreen.setVisible(true);
@@ -93,7 +94,7 @@ public class ScreenManager {
         loginDataRegisterScreen.setVisible(false);
     }
 
-    public void showLoginDataRegisterScreen(){
+    public void showLoginDataRegisterScreen() {
         loginScreen.setVisible(false);
         entryScreen.setVisible(false);
         addressDataRegisterScreen.setVisible(false);

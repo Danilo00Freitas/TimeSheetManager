@@ -62,7 +62,6 @@ public class LoginScreen extends JFrame {
         });
 
 
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Encerrar a aplicação quando a janela de login for fechada
         setVisible(true);
     }
