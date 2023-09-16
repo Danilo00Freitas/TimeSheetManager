@@ -98,13 +98,10 @@ public class PersonalDataRegisterScreen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
-
-
+                saveVariables();
                 PersonalDataInformation personalDataInformation = new PersonalDataInformation(cpf,nome,setor,cargo,superior,
                         rotinaDeTrabalho,genero,telefone,dataDeNascimento);
-                System.out.println("Cadastro de " + personalDataInformation.getNome() + "portador do CPF: " + personalDataInformation.getCpf() + "realiazdo");
+                System.out.println("Cadastro de " + personalDataInformation.getNome() + " portador do CPF: " + personalDataInformation.getCpf() + " realiazdo");
                 screenManager.showAddressDataRegisterScreen();
             }
         });

@@ -4,7 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import TimeSheetApp.BackEnd.ScreenManager;
+import TimeSheetApp.BackEnd.SystemIntegration.NewHttpRequest;
 
 public class AddressDataRegisterScreen extends JFrame {
     private JPanel mainPanel;
@@ -17,6 +21,7 @@ public class AddressDataRegisterScreen extends JFrame {
     private JButton registerButton;
     private JButton goBackButton;
     private ScreenManager screenManager;
+    private NewHttpRequest newHttpRequest = new NewHttpRequest();
 
     public AddressDataRegisterScreen(ScreenManager screenManager) {
         // Inicializando o gerenciador de tela
@@ -63,6 +68,18 @@ public class AddressDataRegisterScreen extends JFrame {
         ufField = new JTextField();
         ufField.setBorder(BorderFactory.createTitledBorder("UF"));
         mainPanel.add(ufField);
+
+        //Adicionando verificação de CEP
+        cepField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String cepText = cepField.getText();
+                if (cepText.length() == 8){
+                    var cepInfo = newHttpRequest.getAddressInfo(cepText);
+                    System.out.println(cepInfo);
+                }
+            }
+        });
 
         // Botão de cadastro
         registerButton = new JButton("Próximo");
