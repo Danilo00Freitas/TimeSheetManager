@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import TimeSheetApp.BackEnd.ScreenManager;
+import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
 
 public class PersonalDataRegisterScreen extends JFrame {
     private JPanel mainPanel;
@@ -20,6 +21,15 @@ public class PersonalDataRegisterScreen extends JFrame {
     private JButton registerButton;
     private JButton goBackButton;
     private ScreenManager screenManager;
+    private String cpf;
+    private String nome;
+    private String setor;
+    private String cargo;
+    private String superior;
+    private String rotinaDeTrabalho;
+    private String genero;
+    private String telefone;
+    private String dataDeNascimento;
 
     public PersonalDataRegisterScreen(ScreenManager screenManager) {
         // Inicializando o gerenciador de tela
@@ -88,6 +98,13 @@ public class PersonalDataRegisterScreen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
+
+
+                PersonalDataInformation personalDataInformation = new PersonalDataInformation(cpf,nome,setor,cargo,superior,
+                        rotinaDeTrabalho,genero,telefone,dataDeNascimento);
+                System.out.println("Cadastro de " + personalDataInformation.getNome() + "portador do CPF: " + personalDataInformation.getCpf() + "realiazdo");
                 screenManager.showAddressDataRegisterScreen();
             }
         });
@@ -102,5 +119,18 @@ public class PersonalDataRegisterScreen extends JFrame {
             }
         });
     }
+
+    public void saveVariables(){
+        this.cpf = cpfField.getText();
+        this.nome = nameField.getText();
+        this.setor = sectorField.getText();
+        this.cargo = positionField.getText();
+        this.superior = immediateSupervisorField.getText();
+        this.rotinaDeTrabalho = workRoutineField.getText();
+        this.genero = genderField.getText();
+        this.telefone = phoneField.getText();
+        this.dataDeNascimento = birthDateField.getText();
+    }
+
 }
 

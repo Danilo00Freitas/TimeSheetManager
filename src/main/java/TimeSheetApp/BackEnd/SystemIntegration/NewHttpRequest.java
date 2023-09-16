@@ -1,5 +1,7 @@
 package TimeSheetApp.BackEnd.SystemIntegration;
 
+import com.google.gson.Gson;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -10,6 +12,7 @@ public class NewHttpRequest {
     private HttpClient client;
     private HttpRequest request;
     private  CompletableFuture<HttpResponse<String>> responseFuture;
+    private Gson gson;
 
     public void newHttpRequest(){}
     public String sendHttpRequest(String uri) {
@@ -20,8 +23,20 @@ public class NewHttpRequest {
         return responseFuture.thenApply(HttpResponse::body).join();
     }
 
-    public String getAddressInfo (String cep){
+    public CepInformationRec getAddressInfo (String cep){
         String uri = "http://viacep.com.br/ws/" + cep +"/json/";
+        String cepRequest = sendHttpRequest(uri);
+        this.gson = new Gson();
+
+        CepInformationRec cepInformationRec = gson.fromJson(cepRequest,CepInformationRec.class);
+        return cepInformationRec;
+    }
+
+    public String getCpfInfo(String cpf, String birthDay){
+        String uri = "https://api.infosimples.com/api/v2/consultas/receita-federal/" +
+                "cpf?token=YjsJFYmL8N9saXaGJ3IMh2vmblAKQGOs-sVabLPR&timeout=600&cpf=" +
+                cpf + "&birthdate=" + birthDay + "&origem=web";
         return sendHttpRequest(uri);
+
     }
 }
