@@ -19,7 +19,6 @@ public class NewHttpRequest {
         client = HttpClient.newHttpClient();
         request = HttpRequest.newBuilder().uri(URI.create(uri)).build();
         responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-
         return responseFuture.thenApply(HttpResponse::body).join();
     }
 
@@ -27,8 +26,7 @@ public class NewHttpRequest {
         String uri = "http://viacep.com.br/ws/" + cep +"/json/";
         String cepRequest = sendHttpRequest(uri);
         this.gson = new Gson();
-        CepInformationRec cepInformationRec = gson.fromJson(cepRequest,CepInformationRec.class);
-        return cepInformationRec;
+        return gson.fromJson(cepRequest,CepInformationRec.class);
     }
 
     public String getCpfInfo(String cpf, String birthDay){

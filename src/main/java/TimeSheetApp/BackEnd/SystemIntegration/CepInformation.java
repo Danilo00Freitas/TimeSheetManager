@@ -9,14 +9,14 @@ public class CepInformation {
     private String localidade;
     private String uf;
 
-    public CepInformation(String cep,String logradouro, String complemento, String bairro,String localidade,String uf){
-        this.cep = cep;
-        this.logradouro = logradouro;
-        /*this.numero = numero;*/
-        this.complemento = complemento;
-        this.bairro = bairro;
-        this.localidade = localidade;
-        this.uf = uf;
+    public CepInformation(CepInformationRec cepInformationRec){
+
+        this.cep = cepInformationRec.cep();
+        this.logradouro = cepInformationRec.logradouro();
+        this.complemento = cepInformationRec.complemento();
+        this.bairro = cepInformationRec.bairro();
+        this.localidade = cepInformationRec.localidade();
+        this.uf = cepInformationRec.uf();
     }
 
     public String getCep() {

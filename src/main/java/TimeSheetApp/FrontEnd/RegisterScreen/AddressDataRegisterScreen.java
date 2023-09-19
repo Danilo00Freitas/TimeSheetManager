@@ -8,7 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import TimeSheetApp.BackEnd.ScreenManager;
-import TimeSheetApp.BackEnd.SystemIntegration.CepInformationRec;
+import TimeSheetApp.BackEnd.SystemIntegration.CepInformation;
 import TimeSheetApp.BackEnd.SystemIntegration.NewHttpRequest;
 
 public class AddressDataRegisterScreen extends JFrame {
@@ -63,7 +63,6 @@ public class AddressDataRegisterScreen extends JFrame {
         numberField.setBorder(BorderFactory.createTitledBorder("Numero"));
         mainPanel.add(numberField);
 
-
         // Campo de entrada para complemento
         complementoField = new JTextField();
         complementoField.setBorder(BorderFactory.createTitledBorder("Complemento"));
@@ -91,7 +90,12 @@ public class AddressDataRegisterScreen extends JFrame {
                 String cepText = cepField.getText();
                 if (cepText.length() == 8){
                     var cepInfo = newHttpRequest.getAddressInfo(cepText);
-
+                    CepInformation cepInformation = new CepInformation(cepInfo);
+                    logradouroField.setText(cepInformation.getLogradouro().toString());
+                    complementoField.setText(cepInformation.getComplemento().toString());
+                    bairroField.setText(cepInformation.getBairro().toString());
+                    localidadeField.setText(cepInformation.getLocalidade().toString());
+                    ufField.setText(cepInformation.getUf().toString());
 
                     System.out.println(cepInfo);
                 }
