@@ -8,12 +8,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import TimeSheetApp.BackEnd.ScreenManager;
+import TimeSheetApp.BackEnd.SystemIntegration.CepInformationRec;
 import TimeSheetApp.BackEnd.SystemIntegration.NewHttpRequest;
 
 public class AddressDataRegisterScreen extends JFrame {
     private JPanel mainPanel;
     private JTextField cepField;
     private JTextField logradouroField;
+    private JTextField numberField;
     private JTextField complementoField;
     private JTextField bairroField;
     private JTextField localidadeField;
@@ -22,6 +24,13 @@ public class AddressDataRegisterScreen extends JFrame {
     private JButton goBackButton;
     private ScreenManager screenManager;
     private NewHttpRequest newHttpRequest = new NewHttpRequest();
+    private String cep;
+    private String logradouro;
+    private String numero;
+    private String complemento;
+    private String bairro;
+    private String localidade;
+    private String uf;
 
     public AddressDataRegisterScreen(ScreenManager screenManager) {
         // Inicializando o gerenciador de tela
@@ -36,7 +45,7 @@ public class AddressDataRegisterScreen extends JFrame {
 
         // Criando o painel principal onde os componentes ficarão
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(8, 1));
+        mainPanel.setLayout(new GridLayout(9, 1));
         getContentPane().add(mainPanel);
 
         // Campo de entrada para CEP
@@ -48,6 +57,12 @@ public class AddressDataRegisterScreen extends JFrame {
         logradouroField = new JTextField();
         logradouroField.setBorder(BorderFactory.createTitledBorder("Logradouro"));
         mainPanel.add(logradouroField);
+
+        // Campo de entrada para numero
+        numberField = new JTextField();
+        numberField.setBorder(BorderFactory.createTitledBorder("Numero"));
+        mainPanel.add(numberField);
+
 
         // Campo de entrada para complemento
         complementoField = new JTextField();
@@ -76,6 +91,8 @@ public class AddressDataRegisterScreen extends JFrame {
                 String cepText = cepField.getText();
                 if (cepText.length() == 8){
                     var cepInfo = newHttpRequest.getAddressInfo(cepText);
+
+
                     System.out.println(cepInfo);
                 }
             }

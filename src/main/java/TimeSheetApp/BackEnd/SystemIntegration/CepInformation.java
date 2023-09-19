@@ -3,6 +3,7 @@ package TimeSheetApp.BackEnd.SystemIntegration;
 public class CepInformation {
     private String cep;
     private String logradouro;
+    private String numero;
     private String complemento;
     private String bairro;
     private String localidade;
@@ -11,6 +12,7 @@ public class CepInformation {
     public CepInformation(String cep,String logradouro, String complemento, String bairro,String localidade,String uf){
         this.cep = cep;
         this.logradouro = logradouro;
+        /*this.numero = numero;*/
         this.complemento = complemento;
         this.bairro = bairro;
         this.localidade = localidade;
@@ -24,6 +26,7 @@ public class CepInformation {
     public String getLogradouro() {
         return logradouro;
     }
+    public String getNumero() {return numero; }
 
     public String getComplemento() {
         return complemento;

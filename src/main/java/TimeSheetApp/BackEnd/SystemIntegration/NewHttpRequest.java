@@ -27,7 +27,6 @@ public class NewHttpRequest {
         String uri = "http://viacep.com.br/ws/" + cep +"/json/";
         String cepRequest = sendHttpRequest(uri);
         this.gson = new Gson();
-
         CepInformationRec cepInformationRec = gson.fromJson(cepRequest,CepInformationRec.class);
         return cepInformationRec;
     }
@@ -37,6 +36,5 @@ public class NewHttpRequest {
                 "cpf?token=YjsJFYmL8N9saXaGJ3IMh2vmblAKQGOs-sVabLPR&timeout=600&cpf=" +
                 cpf + "&birthdate=" + birthDay + "&origem=web";
         return sendHttpRequest(uri);
-
     }
 }
