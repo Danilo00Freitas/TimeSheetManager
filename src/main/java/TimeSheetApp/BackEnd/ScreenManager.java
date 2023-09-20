@@ -1,6 +1,5 @@
 package TimeSheetApp.BackEnd;
 
-import TimeSheetApp.BackEnd.TimeSheetManager;
 import TimeSheetApp.FrontEnd.LoginScreen;
 import TimeSheetApp.FrontEnd.MenuScreen;
 import TimeSheetApp.FrontEnd.EntryScreen;

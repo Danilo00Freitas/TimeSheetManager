@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import TimeSheetApp.BackEnd.InfoValidator;
 import TimeSheetApp.BackEnd.ScreenManager;
 
 public class LoginDataRegisterScreen extends JFrame {
@@ -43,10 +45,22 @@ public class LoginDataRegisterScreen extends JFrame {
         // Botão de cadastro
         registerButton = new JButton("Cadastrar");
         mainPanel.add(registerButton);
+
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                screenManager.showLoginScreen();
+                InfoValidator infoValidator = new InfoValidator();
+                if (!infoValidator.validateEmail(emailField.getText()) ||
+                        !infoValidator.validatePassword(passwordField.getText())){
+                    JOptionPane.showMessageDialog(null,"E-mail ou senha inválidos...");
+                    emailField.setText("");
+                    passwordField.setText("");
+                }else{
+                    emailField.setText("");
+                    passwordField.setText("");
+                    screenManager.showLoginScreen();
+                }
+                System.out.println("botão pressionado");
             }
         });
 
