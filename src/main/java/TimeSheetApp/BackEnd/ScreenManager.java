@@ -1,5 +1,6 @@
 package TimeSheetApp.BackEnd;
 
+import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
 import TimeSheetApp.FrontEnd.LoginScreen;
 import TimeSheetApp.FrontEnd.MenuScreen;
 import TimeSheetApp.FrontEnd.EntryScreen;
@@ -17,6 +18,7 @@ public class ScreenManager {
     private PersonalDataRegisterScreen personalDataRegisterScreen;
     private AddressDataRegisterScreen addressDataRegisterScreen;
     private LoginDataRegisterScreen loginDataRegisterScreen;
+    private PersonalDataInformation personalDataInformation;
 
     public ScreenManager() {
         // Inicializa os objetos das telas MenuScreen, EntryScreen e ChangeEntryScreen
@@ -27,7 +29,11 @@ public class ScreenManager {
         changeEntryScreen = new ChangeEntryScreen(this, timeSheetManager);
         loginScreen = new LoginScreen(this);
         personalDataRegisterScreen = new PersonalDataRegisterScreen(this);
+
+        personalDataInformation = new PersonalDataInformation("","","","","",
+                "","","","");
         addressDataRegisterScreen = new AddressDataRegisterScreen(this);
+
         loginDataRegisterScreen = new LoginDataRegisterScreen(this);
     }
 
@@ -84,7 +90,8 @@ public class ScreenManager {
         loginDataRegisterScreen.setVisible(false);
     }
 
-    public void showAddressDataRegisterScreen() {
+    public void showAddressDataRegisterScreen(PersonalDataInformation personalDataInformation) {
+        this.personalDataInformation = personalDataInformation;
         loginScreen.setVisible(false);
         entryScreen.setVisible(false);
         addressDataRegisterScreen.setVisible(true);
@@ -95,6 +102,7 @@ public class ScreenManager {
     }
 
     public void showLoginDataRegisterScreen() {
+
         loginScreen.setVisible(false);
         entryScreen.setVisible(false);
         addressDataRegisterScreen.setVisible(false);
@@ -102,6 +110,16 @@ public class ScreenManager {
         personalDataRegisterScreen.setVisible(false);
         changeEntryScreen.setVisible(false);
         loginDataRegisterScreen.setVisible(true);
+    }
+
+    public void setNewPdi(PersonalDataInformation pdi){
+        PersonalDataInformation newPdi = new PersonalDataInformation(pdi.getCpf(), pdi.getNome(),
+                pdi.getSetor(), pdi.getCargo(), pdi.getSuperior(),pdi.getRotinaDeTrabalho(),
+                pdi.getGenero(), pdi.getTelefone(),pdi.getDataDeNascimento());
+
+    }
+    public PersonalDataInformation getPdi(){
+        return this.personalDataInformation;
     }
 
 }

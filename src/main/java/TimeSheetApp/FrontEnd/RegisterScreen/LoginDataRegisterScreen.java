@@ -5,8 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import TimeSheetApp.BackEnd.DataBaseInteraction.DataBaseConnection;
 import TimeSheetApp.BackEnd.InfoValidator;
 import TimeSheetApp.BackEnd.ScreenManager;
+import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
 
 public class LoginDataRegisterScreen extends JFrame {
     private JPanel mainPanel;
@@ -15,6 +17,8 @@ public class LoginDataRegisterScreen extends JFrame {
     private JButton registerButton;
     private JButton goBackButton;
     private ScreenManager screenManager;
+    private DataBaseConnection dataBaseConnection;
+    private PersonalDataInformation personalDataInformation;
 
     public LoginDataRegisterScreen(ScreenManager screenManager) {
         // Inicializando o gerenciador de tela
@@ -58,9 +62,17 @@ public class LoginDataRegisterScreen extends JFrame {
                 }else{
                     emailField.setText("");
                     passwordField.setText("");
+
+                    dataBaseConnection = new DataBaseConnection();
+                    var pdi = screenManager.getPdi();
+                    dataBaseConnection.insertIntoEmployeeRegisterTable(pdi.getCpf(), pdi.getNome(), pdi.getSetor(),
+                            pdi.getCargo(), pdi.getSuperior(), pdi.getRotinaDeTrabalho(),pdi.getGenero(),
+                            pdi.getTelefone(),pdi.getDataDeNascimento());
+
                     screenManager.showLoginScreen();
                 }
                 System.out.println("botão pressionado");
+                System.out.println("PID funcionando 3: " + screenManager.getPdi().getNome());
             }
         });
 
@@ -70,8 +82,11 @@ public class LoginDataRegisterScreen extends JFrame {
         goBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                screenManager.showAddressDataRegisterScreen();
+                //adicionar lógica para zerar o pdi antes de voltar pra tela anterior
+
+                /*screenManager.showAddressDataRegisterScreen();*/
             }
         });
     }
+
 }

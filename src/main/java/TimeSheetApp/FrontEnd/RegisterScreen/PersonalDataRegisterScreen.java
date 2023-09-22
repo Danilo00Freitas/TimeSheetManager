@@ -175,11 +175,11 @@ public class PersonalDataRegisterScreen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                saveVariables();
-                PersonalDataInformation personalDataInformation = new PersonalDataInformation(cpf, nome, setor, cargo, superior,
-                        rotinaDeTrabalho, genero, telefone, dataDeNascimento);
-                System.out.println("Cadastro de " + personalDataInformation.getNome() + " portador do CPF: " + personalDataInformation.getCpf() + " realizado");
-                screenManager.showAddressDataRegisterScreen();
+                var pdi = saveVariables();
+                System.out.println("Cadastro de " + pdi.getNome() + " portador do CPF: " + pdi.getCpf() + " realizado");
+
+                screenManager.showAddressDataRegisterScreen(pdi);
+                System.out.println("PDI FUNCIONANDO:" + pdi.getNome());
             }
         });
 
@@ -194,7 +194,7 @@ public class PersonalDataRegisterScreen extends JFrame {
         });
     }
 
-    public void saveVariables() {
+    public PersonalDataInformation saveVariables() {
         this.cpf = cpfField.getText();
         this.nome = nameField.getText();
         this.setor = (String) sectorComboBox.getSelectedItem().toString();
@@ -204,5 +204,11 @@ public class PersonalDataRegisterScreen extends JFrame {
         this.genero = (String) genderComboBox.getSelectedItem().toString();
         this.telefone = phoneField.getText();
         this.dataDeNascimento = birthDateField.getText();
+
+        return new PersonalDataInformation(cpf, nome, setor, cargo, superior,
+                rotinaDeTrabalho,genero, telefone, dataDeNascimento);
+
+
     }
+
 }

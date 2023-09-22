@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import TimeSheetApp.BackEnd.ScreenManager;
 import TimeSheetApp.BackEnd.SystemIntegration.CepInformation;
 import TimeSheetApp.BackEnd.SystemIntegration.NewHttpRequest;
+import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
 
 public class AddressDataRegisterScreen extends JFrame {
     private JPanel mainPanel;
@@ -108,6 +109,7 @@ public class AddressDataRegisterScreen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("PDI FUNCIONANDO 2: "+ screenManager.getPdi().getNome());
                 screenManager.showLoginDataRegisterScreen();
             }
         });

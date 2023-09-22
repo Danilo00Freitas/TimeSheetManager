@@ -1,5 +1,6 @@
 package TimeSheetApp.FrontEnd;
 
+import TimeSheetApp.BackEnd.DataBaseInteraction.DataBaseConnection;
 import TimeSheetApp.BackEnd.ScreenManager;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class LoginScreen extends JFrame {
     private JButton loginButton;
     private JButton registerButton;
     private ScreenManager screenManager;
+    private DataBaseConnection dataBaseConnection;
 
     public LoginScreen(ScreenManager screenManager) {
         // Inicializando screen manager
@@ -60,7 +62,6 @@ public class LoginScreen extends JFrame {
                 screenManager.showPersonalDataRegisterScreen();
             }
         });
-
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Encerrar a aplicação quando a janela de login for fechada
         setVisible(true);

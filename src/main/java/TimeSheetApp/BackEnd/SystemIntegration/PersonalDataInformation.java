@@ -25,6 +25,7 @@ public class PersonalDataInformation {
         this.dataDeNascimento = dataDeNascimento;
     }
 
+
     public String getCpf() {
         return cpf;
     }
