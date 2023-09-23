@@ -43,4 +43,8 @@ public class CepInformation {
     public String getUf() {
         return uf;
     }
+    public void setNumero(String numero){
+        this.numero = numero;
+    }
+
 }

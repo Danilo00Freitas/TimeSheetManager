@@ -9,8 +9,8 @@ import java.awt.event.KeyEvent;
 
 import TimeSheetApp.BackEnd.ScreenManager;
 import TimeSheetApp.BackEnd.SystemIntegration.CepInformation;
+import TimeSheetApp.BackEnd.SystemIntegration.CepInformationRec;
 import TimeSheetApp.BackEnd.SystemIntegration.NewHttpRequest;
-import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
 
 public class AddressDataRegisterScreen extends JFrame {
     private JPanel mainPanel;
@@ -25,13 +25,9 @@ public class AddressDataRegisterScreen extends JFrame {
     private JButton goBackButton;
     private ScreenManager screenManager;
     private NewHttpRequest newHttpRequest = new NewHttpRequest();
-    private String cep;
-    private String logradouro;
-    private String numero;
-    private String complemento;
-    private String bairro;
-    private String localidade;
-    private String uf;
+
+    private CepInformationRec cepInformationRec = new CepInformationRec("","","","","","");
+    private CepInformation cepInformation = new CepInformation(cepInformationRec);
 
     public AddressDataRegisterScreen(ScreenManager screenManager) {
         // Inicializando o gerenciador de tela
@@ -97,8 +93,9 @@ public class AddressDataRegisterScreen extends JFrame {
                     bairroField.setText(cepInformation.getBairro().toString());
                     localidadeField.setText(cepInformation.getLocalidade().toString());
                     ufField.setText(cepInformation.getUf().toString());
-
+                    cepInformation.setNumero(numberField.getText());
                     System.out.println(cepInfo);
+                    saveVariables(cepInformation);
                 }
             }
         });
@@ -109,8 +106,9 @@ public class AddressDataRegisterScreen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 System.out.println("PDI FUNCIONANDO 2: "+ screenManager.getPdi().getNome());
-                screenManager.showLoginDataRegisterScreen();
+                screenManager.showLoginDataRegisterScreen(cepInformation);
             }
         });
 
@@ -124,5 +122,9 @@ public class AddressDataRegisterScreen extends JFrame {
             }
         });
     }
+    public void saveVariables(CepInformation cepInfo){
+        this.cepInformation = cepInfo;
+    }
+
 }
 

@@ -1,5 +1,7 @@
 package TimeSheetApp.BackEnd;
 
+import TimeSheetApp.BackEnd.SystemIntegration.CepInformation;
+import TimeSheetApp.BackEnd.SystemIntegration.CepInformationRec;
 import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
 import TimeSheetApp.FrontEnd.LoginScreen;
 import TimeSheetApp.FrontEnd.MenuScreen;
@@ -19,6 +21,7 @@ public class ScreenManager {
     private AddressDataRegisterScreen addressDataRegisterScreen;
     private LoginDataRegisterScreen loginDataRegisterScreen;
     private PersonalDataInformation personalDataInformation;
+    private CepInformation cepInformation;
 
     public ScreenManager() {
         // Inicializa os objetos das telas MenuScreen, EntryScreen e ChangeEntryScreen
@@ -32,6 +35,10 @@ public class ScreenManager {
 
         personalDataInformation = new PersonalDataInformation("","","","","",
                 "","","","");
+
+        CepInformationRec cepInformationRec = new CepInformationRec("","","","","","");
+        CepInformation cepInformation= new CepInformation(cepInformationRec);
+
         addressDataRegisterScreen = new AddressDataRegisterScreen(this);
 
         loginDataRegisterScreen = new LoginDataRegisterScreen(this);
@@ -101,8 +108,9 @@ public class ScreenManager {
         loginDataRegisterScreen.setVisible(false);
     }
 
-    public void showLoginDataRegisterScreen() {
+    public void showLoginDataRegisterScreen(CepInformation cepInformation) {
 
+        this.cepInformation = cepInformation;
         loginScreen.setVisible(false);
         entryScreen.setVisible(false);
         addressDataRegisterScreen.setVisible(false);
@@ -118,8 +126,12 @@ public class ScreenManager {
                 pdi.getGenero(), pdi.getTelefone(),pdi.getDataDeNascimento());
 
     }
+
     public PersonalDataInformation getPdi(){
         return this.personalDataInformation;
     }
+    public CepInformation getAddInfo(){return this.cepInformation;}
+
+    public CepInformation getCepInformation(){return this.cepInformation;}
 
 }

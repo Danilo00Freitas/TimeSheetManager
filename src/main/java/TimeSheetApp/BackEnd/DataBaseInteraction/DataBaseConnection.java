@@ -30,6 +30,34 @@ public class DataBaseConnection {
         }
     }
 
+    public void insertIntoAddressTable(String cpf, String cep, String logradouro, String numero, String complemento,
+                                       String bairro, String localidade, String uf) {
+        try {
+            Connection connection = DriverManager.getConnection(url, usuario, senha);
+            String query = "INSERT INTO addressTable (cpf, cep, logradouro, numero, complemento, bairro, localidade, uf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            // Define os valores usando placeholders
+            preparedStatement.setString(1, cpf);
+            preparedStatement.setString(2, cep);
+            preparedStatement.setString(3, logradouro);
+            preparedStatement.setString(4, numero);
+            preparedStatement.setString(5, complemento);
+            preparedStatement.setString(6, bairro);
+            preparedStatement.setString(7, localidade);
+            preparedStatement.setString(8, uf);
+
+            // Executa a inserção
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("Linhas afetadas: " + rowsAffected);
+
+            // Fecha a conexão
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void insertIntoEmployeeRegisterTable(String cpf, String nome, String setor, String cargo, String superiorImediato,
                                                 String rotinaDetrabalho, String genero, String telefone, String dataDeNascimento) {
         try {
@@ -58,5 +86,7 @@ public class DataBaseConnection {
             e.printStackTrace();
         }
     }
+
+
 }
 

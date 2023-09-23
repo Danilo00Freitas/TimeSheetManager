@@ -69,6 +69,11 @@ public class LoginDataRegisterScreen extends JFrame {
                             pdi.getCargo(), pdi.getSuperior(), pdi.getRotinaDeTrabalho(),pdi.getGenero(),
                             pdi.getTelefone(),pdi.getDataDeNascimento());
 
+                    var addressInfo = screenManager.getAddInfo();
+                    dataBaseConnection.insertIntoAddressTable(pdi.getCpf(),addressInfo.getCep(), addressInfo.getLogradouro(),
+                            addressInfo.getNumero(), addressInfo.getComplemento(), addressInfo.getBairro(),
+                            addressInfo.getLocalidade(), addressInfo.getUf());
+
                     screenManager.showLoginScreen();
                 }
                 System.out.println("botão pressionado");
