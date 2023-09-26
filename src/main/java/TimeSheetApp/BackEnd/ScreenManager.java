@@ -119,13 +119,17 @@ public class ScreenManager {
         changeEntryScreen.setVisible(false);
         loginDataRegisterScreen.setVisible(true);
     }
-
-    public void setNewPdi(PersonalDataInformation pdi){
-        PersonalDataInformation newPdi = new PersonalDataInformation(pdi.getCpf(), pdi.getNome(),
-                pdi.getSetor(), pdi.getCargo(), pdi.getSuperior(),pdi.getRotinaDeTrabalho(),
-                pdi.getGenero(), pdi.getTelefone(),pdi.getDataDeNascimento());
-
+    public void returnToAddresScreen(){
+        loginScreen.setVisible(false);
+        entryScreen.setVisible(false);
+        addressDataRegisterScreen.setVisible(true);
+        menuScreen.setVisible(false);
+        personalDataRegisterScreen.setVisible(false);
+        changeEntryScreen.setVisible(false);
+        loginDataRegisterScreen.setVisible(false);
     }
+
+
 
     public PersonalDataInformation getPdi(){
         return this.personalDataInformation;

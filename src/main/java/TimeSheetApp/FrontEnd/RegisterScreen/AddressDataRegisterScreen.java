@@ -109,6 +109,7 @@ public class AddressDataRegisterScreen extends JFrame {
 
                 System.out.println("PDI FUNCIONANDO 2: "+ screenManager.getPdi().getNome());
                 screenManager.showLoginDataRegisterScreen(cepInformation);
+                clearFields();
             }
         });
 
@@ -119,11 +120,22 @@ public class AddressDataRegisterScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 screenManager.showPersonalDataRegisterScreen();
+                clearFields();
             }
         });
     }
     public void saveVariables(CepInformation cepInfo){
         this.cepInformation = cepInfo;
+    }
+
+    public void clearFields(){
+        cepField.setText("");
+        logradouroField.setText("");
+        ufField.setText("");
+        numberField.setText("");
+        complementoField.setText("");
+        bairroField.setText("");
+        localidadeField.setText("");
     }
 
 }

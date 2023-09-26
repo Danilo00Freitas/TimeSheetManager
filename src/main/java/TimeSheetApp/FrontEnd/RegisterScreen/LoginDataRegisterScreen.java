@@ -60,8 +60,7 @@ public class LoginDataRegisterScreen extends JFrame {
                     emailField.setText("");
                     passwordField.setText("");
                 }else{
-                    emailField.setText("");
-                    passwordField.setText("");
+
 
                     dataBaseConnection = new DataBaseConnection();
                     var pdi = screenManager.getPdi();
@@ -74,6 +73,10 @@ public class LoginDataRegisterScreen extends JFrame {
                             addressInfo.getNumero(), addressInfo.getComplemento(), addressInfo.getBairro(),
                             addressInfo.getLocalidade(), addressInfo.getUf());
 
+                    dataBaseConnection.insertIntologinRegisterTable(emailField.getText(), passwordField.getPassword().toString());
+
+                    emailField.setText("");
+                    passwordField.setText("");
                     screenManager.showLoginScreen();
                 }
                 System.out.println("botão pressionado");
@@ -87,11 +90,14 @@ public class LoginDataRegisterScreen extends JFrame {
         goBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //adicionar lógica para zerar o pdi antes de voltar pra tela anterior
-
-                /*screenManager.showAddressDataRegisterScreen();*/
+                screenManager.returnToAddresScreen();
+                clearFields();
             }
         });
+    }
+    public void clearFields(){
+        emailField.setText("");
+        passwordField.setText("");
     }
 
 }

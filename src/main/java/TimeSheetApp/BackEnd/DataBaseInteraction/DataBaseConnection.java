@@ -87,6 +87,27 @@ public class DataBaseConnection {
         }
     }
 
+    public void insertIntologinRegisterTable (String email, String password){
+        try {
+            Connection connection = DriverManager.getConnection(url, usuario, senha);
+            String query = "INSERT INTO loginRegisterTable (email, senha) VALUES (?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
 
+            // Define os valores usando placeholders
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+            // Executa a inserção
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("Linhas afetadas: " + rowsAffected);
+
+            // Fecha a conexão
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }
 
