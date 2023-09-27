@@ -28,10 +28,12 @@ public class AddressDataRegisterScreen extends JFrame {
 
     private CepInformationRec cepInformationRec = new CepInformationRec("","","","","","");
     private CepInformation cepInformation = new CepInformation(cepInformationRec);
+    private FieldInfoValidator fieldInfoValidator;
 
     public AddressDataRegisterScreen(ScreenManager screenManager) {
-        // Inicializando o gerenciador de tela
+
         this.screenManager = screenManager;
+        fieldInfoValidator = new FieldInfoValidator();
 
         // Criando a janela principal
         setTitle("Cadastro de Endereço");
@@ -93,7 +95,6 @@ public class AddressDataRegisterScreen extends JFrame {
                     bairroField.setText(cepInformation.getBairro().toString());
                     localidadeField.setText(cepInformation.getLocalidade().toString());
                     ufField.setText(cepInformation.getUf().toString());
-                    cepInformation.setNumero(numberField.getText());
                     System.out.println(cepInfo);
                     saveVariables(cepInformation);
                 }
@@ -106,10 +107,21 @@ public class AddressDataRegisterScreen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                cepInformation.setNumero(numberField.getText());
 
-                System.out.println("PDI FUNCIONANDO 2: "+ screenManager.getPdi().getNome());
-                screenManager.showLoginDataRegisterScreen(cepInformation);
-                clearFields();
+                try{
+                    if (fieldInfoValidator.validateADRSfield(cepInformation)) {
+                        System.out.println("PDI FUNCIONANDO 2: " + screenManager.getPdi().getNome());
+                        screenManager.showLoginDataRegisterScreen(cepInformation);
+                        clearFields();
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Erro: Você não preencheu todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                }catch (Exception exception){
+                    JOptionPane.showMessageDialog(null, "Erro: " + exception.getMessage(), "Exceção", JOptionPane.ERROR_MESSAGE);
+                }
+
+
             }
         });
 

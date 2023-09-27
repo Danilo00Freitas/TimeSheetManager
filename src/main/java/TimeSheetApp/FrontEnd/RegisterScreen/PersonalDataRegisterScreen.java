@@ -35,10 +35,12 @@ public class PersonalDataRegisterScreen extends JFrame {
     private String telefone;
     private String dataDeNascimento;
     private InfoValidator infoValidator = new InfoValidator();
+    private FieldInfoValidator fieldInfoValidator;
 
     public PersonalDataRegisterScreen(ScreenManager screenManager) {
         // Inicializando o gerenciador de tela
         this.screenManager = screenManager;
+        this.fieldInfoValidator = new FieldInfoValidator();
 
         // Criando a janela principal
         setTitle("Cadastro de Usuário");
@@ -168,18 +170,26 @@ public class PersonalDataRegisterScreen extends JFrame {
             }
         });
 
-
         // Botão de cadastro
+        clearFields();
         registerButton = new JButton("Próximo");
         mainPanel.add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                var pdi = saveVariables();
-                System.out.println("Cadastro de " + pdi.getNome() + " portador do CPF: " + pdi.getCpf() + " realizado");
-                screenManager.showAddressDataRegisterScreen(pdi);
-                clearFields();
-                System.out.println("PDI FUNCIONANDO:" + pdi.getNome());
+                try {
+                    var pdi = saveVariables();
+                    if (fieldInfoValidator.validatePDRSfields(pdi)) {
+                        System.out.println("Cadastro de " + pdi.getNome() + " portador do CPF: " + pdi.getCpf() + " realizado");
+                        screenManager.showAddressDataRegisterScreen(pdi);
+                        clearFields();
+                        System.out.println("PDI FUNCIONANDO:" + pdi.getNome());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro: Você não preencheu todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Exceção", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -205,7 +215,6 @@ public class PersonalDataRegisterScreen extends JFrame {
         this.genero = (String) genderComboBox.getSelectedItem().toString();
         this.telefone = phoneField.getText();
         this.dataDeNascimento = birthDateField.getText();
-
         return new PersonalDataInformation(cpf, nome, setor, cargo, superior,
                 rotinaDeTrabalho,genero, telefone, dataDeNascimento);
 
