@@ -1,7 +1,6 @@
 package TimeSheetApp.FrontEnd.RegisterScreen;
 import TimeSheetApp.BackEnd.InfoValidator;
 import TimeSheetApp.BackEnd.ScreenManager;
-import TimeSheetApp.BackEnd.SystemIntegration.CepInformation;
 import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
 import TimeSheetApp.FrontEnd.CustomTextField;
 
@@ -35,12 +34,10 @@ public class PersonalDataRegisterScreen extends JFrame {
     private String telefone;
     private String dataDeNascimento;
     private InfoValidator infoValidator = new InfoValidator();
-    private FieldInfoValidator fieldInfoValidator;
 
     public PersonalDataRegisterScreen(ScreenManager screenManager) {
         // Inicializando o gerenciador de tela
         this.screenManager = screenManager;
-        this.fieldInfoValidator = new FieldInfoValidator();
 
         // Criando a janela principal
         setTitle("Cadastro de Usuário");
@@ -90,7 +87,7 @@ public class PersonalDataRegisterScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedSetor = (String) sectorComboBox.getSelectedItem();
-                positionComboBox.removeAllItems(); // Remova todos os itens anteriores
+                positionComboBox.removeAllItems();
 
                 if ("Vendas".equals(selectedSetor)) {
                     String[] cargosVendas = {"Gerente de Vendas", "Representante de Vendas", "Executivo de Contas", "Consultor de Vendas", "Supervisor de Vendas"};
@@ -177,18 +174,19 @@ public class PersonalDataRegisterScreen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    var pdi = saveVariables();
-                    if (fieldInfoValidator.validatePDRSfields(pdi)) {
-                        System.out.println("Cadastro de " + pdi.getNome() + " portador do CPF: " + pdi.getCpf() + " realizado");
-                        screenManager.showAddressDataRegisterScreen(pdi);
-                        clearFields();
-                        System.out.println("PDI FUNCIONANDO:" + pdi.getNome());
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Erro: Você não preencheu todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Exceção", JOptionPane.ERROR_MESSAGE);
+                var pdi = saveVariables();
+                String errorMsg = infoValidator.pdiFinalValidation(pdi);
+                if (!errorMsg.isEmpty()) {
+                    JTextPane textPane = new JTextPane();
+                    textPane.setText(errorMsg);
+                    JOptionPane.showMessageDialog(null, new JScrollPane(textPane), "Erros", JOptionPane.ERROR_MESSAGE);
+
+                } else {
+                    // Se não houve erros, continue com o processamento
+                    System.out.println("Cadastro de " + pdi.getNome() + " portador do CPF: " + pdi.getCpf() + " realizado");
+                    System.out.println("PDI FUNCIONANDO:" + pdi.getNome());
+                    screenManager.showAddressDataRegisterScreen(pdi);
+                    clearFields();
                 }
             }
         });
@@ -223,7 +221,7 @@ public class PersonalDataRegisterScreen extends JFrame {
         cpfField.setText("");
         nameField.setText("");
         immediateSupervisorField.setText("");
-        sectorComboBox.setSelectedIndex(0); // Defina o índice desejado ou "0" para a primeira opção
+        sectorComboBox.setSelectedIndex(0);
         positionComboBox.setSelectedIndex(0);
         wrkRoutComboBox.setSelectedIndex(0);
         genderComboBox.setSelectedIndex(0);
@@ -232,3 +230,4 @@ public class PersonalDataRegisterScreen extends JFrame {
     }
 
 }
+

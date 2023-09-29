@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import TimeSheetApp.BackEnd.InfoValidator;
 import TimeSheetApp.BackEnd.ScreenManager;
 import TimeSheetApp.BackEnd.SystemIntegration.CepInformation;
 import TimeSheetApp.BackEnd.SystemIntegration.CepInformationRec;
@@ -28,12 +29,13 @@ public class AddressDataRegisterScreen extends JFrame {
 
     private CepInformationRec cepInformationRec = new CepInformationRec("","","","","","");
     private CepInformation cepInformation = new CepInformation(cepInformationRec);
-    private FieldInfoValidator fieldInfoValidator;
+    private InfoValidator infoValidator;
 
     public AddressDataRegisterScreen(ScreenManager screenManager) {
 
         this.screenManager = screenManager;
-        fieldInfoValidator = new FieldInfoValidator();
+        infoValidator = new InfoValidator();
+
 
         // Criando a janela principal
         setTitle("Cadastro de Endereço");
@@ -61,6 +63,18 @@ public class AddressDataRegisterScreen extends JFrame {
         numberField = new JTextField();
         numberField.setBorder(BorderFactory.createTitledBorder("Numero"));
         mainPanel.add(numberField);
+        numberField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (!infoValidator.validateNumberField(numberField.getText())){
+                    JOptionPane.showMessageDialog(null, "Erro: Informe um valor válido para o número", "Erro", JOptionPane.ERROR_MESSAGE);
+                    numberField.setText("");
+                }else{
+                    cepInformation.setNumero(numberField.getText());
+                }
+
+            }
+        });
 
         // Campo de entrada para complemento
         complementoField = new JTextField();
@@ -107,10 +121,8 @@ public class AddressDataRegisterScreen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cepInformation.setNumero(numberField.getText());
-
                 try{
-                    if (fieldInfoValidator.validateADRSfield(cepInformation)) {
+                    if (infoValidator.validateADRSfield(cepInformation)) {
                         System.out.println("PDI FUNCIONANDO 2: " + screenManager.getPdi().getNome());
                         screenManager.showLoginDataRegisterScreen(cepInformation);
                         clearFields();
