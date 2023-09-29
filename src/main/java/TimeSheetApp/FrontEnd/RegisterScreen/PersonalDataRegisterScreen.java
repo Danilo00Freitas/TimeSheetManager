@@ -1,4 +1,5 @@
 package TimeSheetApp.FrontEnd.RegisterScreen;
+import TimeSheetApp.BackEnd.DataBaseInteraction.DataBaseConnection;
 import TimeSheetApp.BackEnd.InfoValidator;
 import TimeSheetApp.BackEnd.ScreenManager;
 import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
@@ -61,6 +62,14 @@ public class PersonalDataRegisterScreen extends JFrame {
                 String cpfText = cpfField.getText();
                 if (infoValidator.validateCpf(cpfText)) {
                     cpfField.setForeground(Color.BLACK);
+                    DataBaseConnection dataBaseConnection = new DataBaseConnection();
+                    var result = dataBaseConnection.checkRegisterExistence(cpfField.getText());
+                    if (result){
+                        JOptionPane.showMessageDialog(null, "Erro: Você já esta cadastrado! Faça login na tela de login"
+                                , "Usuário já cadastrado", JOptionPane.ERROR_MESSAGE);
+                        clearFields();
+                        screenManager.showLoginScreen();
+                    }
                 } else {
                     cpfField.setForeground(Color.RED);
                 }
@@ -175,6 +184,7 @@ public class PersonalDataRegisterScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 var pdi = saveVariables();
+
                 String errorMsg = infoValidator.pdiFinalValidation(pdi);
                 if (!errorMsg.isEmpty()) {
                     JTextPane textPane = new JTextPane();

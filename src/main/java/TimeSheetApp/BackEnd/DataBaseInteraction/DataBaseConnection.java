@@ -1,5 +1,7 @@
 package TimeSheetApp.BackEnd.DataBaseInteraction;
 
+import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
+
 import javax.xml.transform.Result;
 import java.sql.*;
 
@@ -86,6 +88,27 @@ public class DataBaseConnection {
             e.printStackTrace();
         }
     }
+
+    public Boolean checkRegisterExistence(String cpf) {
+        try {
+            Connection connection = DriverManager.getConnection(url, usuario, senha);
+            String query = "SELECT cpf FROM employeeRegisters where cpf = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, cpf);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+            return false;
+        }
+    }
+
 
     public void insertIntologinRegisterTable (String email, String password){
         try {
