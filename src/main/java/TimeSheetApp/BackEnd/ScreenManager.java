@@ -1,5 +1,6 @@
 package TimeSheetApp.BackEnd;
 
+import TimeSheetApp.BackEnd.PasswordManager.PasswordManager;
 import TimeSheetApp.BackEnd.SystemIntegration.CepInformation;
 import TimeSheetApp.BackEnd.SystemIntegration.CepInformationRec;
 import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
@@ -23,14 +24,17 @@ public class ScreenManager {
     private PersonalDataInformation personalDataInformation;
     private CepInformation cepInformation;
 
+    private PasswordManager passwordManager;
+
     public ScreenManager() {
         // Inicializa os objetos das telas MenuScreen, EntryScreen e ChangeEntryScreen
 
+    passwordManager = new PasswordManager();
         timeSheetManager = new TimeSheetManager();
         menuScreen = new MenuScreen(this);
         entryScreen = new EntryScreen(this, timeSheetManager);
         changeEntryScreen = new ChangeEntryScreen(this, timeSheetManager);
-        loginScreen = new LoginScreen(this);
+        loginScreen = new LoginScreen(this, passwordManager);
         personalDataRegisterScreen = new PersonalDataRegisterScreen(this);
 
         personalDataInformation = new PersonalDataInformation("","","","","",
@@ -41,7 +45,7 @@ public class ScreenManager {
 
         addressDataRegisterScreen = new AddressDataRegisterScreen(this);
 
-        loginDataRegisterScreen = new LoginDataRegisterScreen(this);
+        loginDataRegisterScreen = new LoginDataRegisterScreen(this, passwordManager);
     }
 
     public void showMenuScreen() {

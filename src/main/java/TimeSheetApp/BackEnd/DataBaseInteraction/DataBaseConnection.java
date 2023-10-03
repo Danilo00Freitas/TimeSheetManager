@@ -1,8 +1,5 @@
 package TimeSheetApp.BackEnd.DataBaseInteraction;
 
-import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
-
-import javax.xml.transform.Result;
 import java.sql.*;
 
 public class DataBaseConnection {
@@ -110,15 +107,17 @@ public class DataBaseConnection {
     }
 
 
-    public void insertIntologinRegisterTable (String email, String password){
+    public void insertIntologinRegisterTable (String cpf, String email, String password, byte[] salt){
         try {
             Connection connection = DriverManager.getConnection(url, usuario, senha);
-            String query = "INSERT INTO loginRegisterTable (email, senha) VALUES (?, ?)";
+            String query = "INSERT INTO loginRegisterTable (cpf, email, senha, salt) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             // Define os valores usando placeholders
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(1, cpf);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, password);
+            preparedStatement.setString(4, String.valueOf(salt));
 
             // Executa a inserção
             int rowsAffected = preparedStatement.executeUpdate();
@@ -129,8 +128,29 @@ public class DataBaseConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public boolean verifyLogin(String username, char[] password) {
+        try {
+            Connection connection = DriverManager.getConnection(url, usuario, senha);
+            String query = "SELECT email, senha FROM loginRegisterTable WHERE email = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
+            if (resultSet.next()) {
+                String email = resultSet.getString("email");
+                String storedPassword = resultSet.getString("senha");
+                String enteredPassword = String.valueOf(password);
 
+                if (email.equals(username) && storedPassword.equals(enteredPassword)) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
 

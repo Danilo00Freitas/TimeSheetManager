@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import TimeSheetApp.BackEnd.DataBaseInteraction.DataBaseConnection;
 import TimeSheetApp.BackEnd.InfoValidator;
+import TimeSheetApp.BackEnd.PasswordManager.PasswordManager;
 import TimeSheetApp.BackEnd.ScreenManager;
 import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
 
@@ -19,10 +22,13 @@ public class LoginDataRegisterScreen extends JFrame {
     private ScreenManager screenManager;
     private DataBaseConnection dataBaseConnection;
     private PersonalDataInformation personalDataInformation;
+    private PasswordManager passwordManager;;
 
-    public LoginDataRegisterScreen(ScreenManager screenManager) {
+
+    public LoginDataRegisterScreen(ScreenManager screenManager, PasswordManager passwordManager) {
         // Inicializando o gerenciador de tela
         this.screenManager = screenManager;
+        this.passwordManager = passwordManager;
 
         // Criando a janela principal
         setTitle("Cadastro de E-mail e Senha");
@@ -51,6 +57,7 @@ public class LoginDataRegisterScreen extends JFrame {
         mainPanel.add(registerButton);
 
         registerButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 InfoValidator infoValidator = new InfoValidator();
@@ -73,7 +80,18 @@ public class LoginDataRegisterScreen extends JFrame {
                             addressInfo.getNumero(), addressInfo.getComplemento(), addressInfo.getBairro(),
                             addressInfo.getLocalidade(), addressInfo.getUf());
 
-                    dataBaseConnection.insertIntologinRegisterTable(emailField.getText(), passwordField.getPassword().toString());
+                    //gerando e codificando senha
+                    char[] senhaDigitada = passwordField.getPassword();
+
+                    String password;
+                    try {
+                        password = passwordManager.generatePassword(senhaDigitada);
+                        byte[] salt = passwordManager.generateSalt();
+                        dataBaseConnection.insertIntologinRegisterTable(pdi.getCpf(),emailField.getText(), password, salt);
+
+                    } catch (NoSuchAlgorithmException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
                     emailField.setText("");
                     passwordField.setText("");

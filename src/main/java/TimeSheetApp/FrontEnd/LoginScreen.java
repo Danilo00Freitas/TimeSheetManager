@@ -1,12 +1,15 @@
 package TimeSheetApp.FrontEnd;
 
 import TimeSheetApp.BackEnd.DataBaseInteraction.DataBaseConnection;
+import TimeSheetApp.BackEnd.PasswordManager.PasswordManager;
 import TimeSheetApp.BackEnd.ScreenManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class LoginScreen extends JFrame {
     private JPanel mainPanel;
@@ -15,11 +18,19 @@ public class LoginScreen extends JFrame {
     private JButton loginButton;
     private JButton registerButton;
     private ScreenManager screenManager;
-    private DataBaseConnection dataBaseConnection;
+    private DataBaseConnection dataBaseConnection = new DataBaseConnection();
+    private char[] password;
 
-    public LoginScreen(ScreenManager screenManager) {
+    private String loginUserName;
+
+    private PasswordManager passwordManager;
+
+
+
+    public LoginScreen(ScreenManager screenManager, PasswordManager passwordManager) {
         // Inicializando screen manager
         this.screenManager = screenManager;
+        this.passwordManager = passwordManager;
 
         // Criando armação principal
         setTitle("TimeSheet Login");
@@ -48,8 +59,28 @@ public class LoginScreen extends JFrame {
         mainPanel.add(loginButton);
         loginButton.addActionListener(new ActionListener() {
             @Override
+
             public void actionPerformed(ActionEvent e) {
-                screenManager.showMenuScreen();
+                try {
+                    char[] senhaDigitada = passwordField.getPassword();
+                    saveVariables(senhaDigitada);
+                } catch (NoSuchAlgorithmException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                System.out.println(loginUserName);
+                System.out.println(password);
+
+                if (dataBaseConnection.verifyLogin(loginUserName, password)){
+
+                    JOptionPane.showMessageDialog(null,"Login realizado com sucesso!");
+                    clearField();
+                    screenManager.showMenuScreen();
+                }else{
+                    JOptionPane.showMessageDialog(null,"Erro ao realizar login. Verifique suas credênciais ou confirme se você está registrado!");
+                    clearField();
+                }
+
             }
         });
 
@@ -65,6 +96,17 @@ public class LoginScreen extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Encerrar a aplicação quando a janela de login for fechada
         setVisible(true);
+    }
+
+    public void saveVariables(char[] password) throws NoSuchAlgorithmException {
+        this.loginUserName = usernameField.getText();
+        this.password = passwordManager.generatePassword(password).toCharArray();
+
+
+    }
+    public void clearField(){
+        passwordField.setText("");
+        usernameField.setText("");
     }
 }
 
