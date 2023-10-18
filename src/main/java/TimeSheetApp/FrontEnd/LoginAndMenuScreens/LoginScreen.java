@@ -36,7 +36,7 @@ public class LoginScreen extends JFrame {
         // Criando armação principal
         setTitle("TimeSheet Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setSize(600, 400);
         setLocationRelativeTo(null); // Centralizar a janela na tela
         setResizable(false);
 
@@ -73,7 +73,6 @@ public class LoginScreen extends JFrame {
                 System.out.println(password);
 
                 if (dbLoginManager.verifyLogin(loginUserName, password)){
-
                     JOptionPane.showMessageDialog(null,"Login realizado com sucesso!");
                     clearField();
                     screenManager.setUserCpf(dbLoginManager.getUserCpf());

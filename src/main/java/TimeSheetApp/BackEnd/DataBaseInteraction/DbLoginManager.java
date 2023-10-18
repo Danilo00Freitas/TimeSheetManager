@@ -130,19 +130,28 @@ public class DbLoginManager {
                     PreparedStatement preparedStatement1 = connection.prepareStatement(query1);
                     preparedStatement1.setString(1,username);
                     ResultSet resultSet1 = preparedStatement1.executeQuery();
-                    this.userCpf = resultSet1.getString("cpf");
-                    return true;
+
+                    if (resultSet1.next()){
+                        this.userCpf = resultSet1.getString("cpf");
+                        connection.close();
+                        return true;
+
+                    }
                 }
+            }else{
+                connection.close();
+                return false;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+
         }
 
         return false;
     }
 
     public String getUserCpf() {
-        return userCpf;
+        return this.userCpf;
     }
 }
 

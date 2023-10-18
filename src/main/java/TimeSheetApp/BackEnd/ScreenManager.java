@@ -159,6 +159,7 @@ public class ScreenManager {
     public CepInformation getAddInfo(){return this.cepInformation;}
 
     public void setUserCpf(String cpf){
+
         this.userCpf = userCpf;
     }
 

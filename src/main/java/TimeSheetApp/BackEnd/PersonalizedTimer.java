@@ -40,4 +40,6 @@ public class PersonalizedTimer {
         timeTxt.setText(timeFormat.format(currentTime));
     }
 
+
+
 }

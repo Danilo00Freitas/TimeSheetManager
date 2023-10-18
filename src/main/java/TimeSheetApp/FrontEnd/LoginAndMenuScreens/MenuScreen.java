@@ -19,7 +19,7 @@ public class MenuScreen extends JFrame {
         // Criando armação principal
         setTitle("TimeSheet Menu Screen");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 800);
+        setSize(600, 400);
         setLocationRelativeTo(null); // Centralizar a janela na tela
         setResizable(false);
 

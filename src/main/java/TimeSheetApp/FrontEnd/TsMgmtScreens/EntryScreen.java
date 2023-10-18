@@ -1,8 +1,12 @@
 package TimeSheetApp.FrontEnd.TsMgmtScreens;
 
+import TimeSheetApp.BackEnd.DataBaseInteraction.DbClockInManager;
+import TimeSheetApp.BackEnd.DataBaseInteraction.DbConnectionManager;
 import TimeSheetApp.BackEnd.PersonalizedTimer;
 import TimeSheetApp.BackEnd.ScreenManager;
 import TimeSheetApp.BackEnd.TimeSheetManager;
+import TimeSheetApp.FrontEnd.CustomFrontendThings.CustomTextField;
+import org.apache.poi.ss.formula.atp.Switch;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +27,13 @@ public class EntryScreen extends JFrame {
     private TimeSheetManager timeSheetManager;
     private int rowIndex = 0;
     private String userCpf;
+    private String[] options = {"Selecione","Entrada","intervalo","retorno do intervalo", "saída"};
+   private String[] reasons = {"Selecione","Dia de trabalho normal","feriado", "hora extra"};
+   private DbConnectionManager dataBaseConnection = new DbConnectionManager();
+   private DbClockInManager dbClockInManager = new DbClockInManager();
 
+
+   private CustomTextField customTextField = new CustomTextField();
 
     public EntryScreen(ScreenManager screenManager, TimeSheetManager timeSheetManager) {
         // Inicializando o screemanager
@@ -57,94 +67,29 @@ public class EntryScreen extends JFrame {
 
         mainPanel.add(timerPane);
 
-        // Adicionar botões
+        //Configurando botões e interações do programa.
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(6, 1)); // GridLayout com 1 linha e 4 colunas
-
-        JButton entryBtn = new JButton("Entrada");
-        JButton breakBtn = new JButton("Saída Intervalo");
-        JButton breakReturnBtn = new JButton("Retorno intervalo");
-        JButton exitBtn = new JButton("Saída");
+        buttonPanel.setLayout(new GridLayout(5, 1)); // GridLayout com 1 linha e 4 colunas
 
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
         String stringF = dateFormat.format(currentDate);
-        JButton saveBtn = new JButton("Salvar ponto do dia " + stringF);
+
+        JComboBox<String> entryOptions = new JComboBox<>(options);
+        JComboBox<String> reasonOptions = new JComboBox<>(reasons);
+
+        var justifyTxtField = customTextField.focusedTxtField("Insira a justificativa");
+
+        JButton saveBtn = new JButton("Enviar batida de ponto");
         JButton returnToMenuBtn = new JButton("Voltar para Menu");
 
-        buttonPanel.add(entryBtn);
-        buttonPanel.add(breakBtn);
-        buttonPanel.add(breakReturnBtn);
-        buttonPanel.add(exitBtn);
+        buttonPanel.add(entryOptions);
+        buttonPanel.add(reasonOptions);
+        buttonPanel.add(justifyTxtField);
         buttonPanel.add(saveBtn);
         buttonPanel.add(returnToMenuBtn);
-
         mainPanel.add(buttonPanel);
-
-        // Adicionando ação aos botões
-
-        entryBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String entryTime = timeFormat.format(new Date());
-                timeSheetRecorderlist.add(dateFormat.format(currentDate));
-                timeSheetRecorderlist.add(entryTime);
-                JOptionPane.showMessageDialog(null, "Batida de entrada às " + entryTime + " adicionada.");
-            }
-        });
-
-        breakBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String breakTime = timeFormat.format(new Date());
-                timeSheetRecorderlist.add(breakTime);
-                JOptionPane.showMessageDialog(null, "Batida de saída para almoço às " + breakTime + " adicionada.");
-            }
-        });
-
-        breakReturnBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String returnTime = timeFormat.format(new Date());
-                timeSheetRecorderlist.add(returnTime);
-                JOptionPane.showMessageDialog(null, "Volta do almoço às " + returnTime + " registrada.");
-            }
-        });
-
-        exitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String exitTime = timeFormat.format(new Date());
-                timeSheetRecorderlist.add(exitTime);
-                JOptionPane.showMessageDialog(null, " Saída registrada às " + exitTime + " registrada.");
-            }
-        });
-
-        saveBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(timeSheetRecorderlist);
-                if(timeSheetRecorderlist.size() != 5){
-                    JOptionPane.showMessageDialog(null, "ERRO! Quantidade de batidas de ponto incorretas!\n Insira as batidas novamente");
-                    timeSheetRecorderlist.clear();
-
-                }else{
-                    JOptionPane.showMessageDialog(null,"Batidas exportadas para a planilha com sucesso!");
-                    timeSheetManager.exportToTable(timeSheetRecorderlist);
-                    timeSheetRecorderlist.clear();
-                }
-
-            }
-        });
-
-        returnToMenuBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                screenManager.showMenuScreen();
-            }
-        });
 
         // Configurar a janela e torná-la visível
         setPreferredSize(new Dimension(600, 400)); // Defina o tamanho preferido desejado
@@ -154,6 +99,54 @@ public class EntryScreen extends JFrame {
 
         // Inicializar a interface
         initializeUI();
+        // Adicionando ação aos botões
+
+        saveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String currentDate = dateTextF.getText();
+                String currentTime = timetextF.getText();
+                String currentType = (String)entryOptions.getSelectedItem();
+                String currentJustification = justifyTxtField.getText();
+                String currentReason = (String) reasonOptions.getSelectedItem();
+
+                switch (currentType) {
+                    case "Entrada":
+                        try{
+                            System.out.println(userCpf);
+                        dbClockInManager.insertArrival(userCpf,currentDate,currentTime,currentType,currentJustification,currentReason);
+                        }catch (Exception exception){
+                            JOptionPane.showMessageDialog(null,"Erro ao enviar batida de ponto");
+                            System.out.println(exception);
+                        }
+                        // Faça algo quando currentType for "Entrada"
+                        break;
+                    case "Intervalo":
+                        // Faça algo quando currentType for "Intervalo"
+                        break;
+                    case "Retorno":
+                        // Faça algo quando currentType for "Retorno"
+                        break;
+                    case "Saída":
+                        // Faça algo quando currentType for "Saída"
+                        break;
+                    default:
+                        // Se currentType não corresponder a nenhum dos casos
+                        // Faça algo para a situação padrão ou adicione uma mensagem de erro
+                        break;
+                }
+
+
+                //adicionar logica para o botão de salvar
+            }
+        });
+        returnToMenuBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                screenManager.showMenuScreen();
+            }
+        });
     }
 
     // Iniciar o timer para atualizar o campo de texto do horário
@@ -163,6 +156,5 @@ public class EntryScreen extends JFrame {
         localTimer.startTimer();
         dateTextF.setText(localTimer.getDate());
         dateTextF.setEditable(false);
-
     }
 }

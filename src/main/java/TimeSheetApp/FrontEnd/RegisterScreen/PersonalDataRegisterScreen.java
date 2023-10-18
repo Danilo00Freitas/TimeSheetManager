@@ -1,10 +1,9 @@
 package TimeSheetApp.FrontEnd.RegisterScreen;
-import TimeSheetApp.BackEnd.DataBaseInteraction.DbConnectionManager;
 import TimeSheetApp.BackEnd.DataBaseInteraction.DbLoginManager;
 import TimeSheetApp.BackEnd.InfoValidator;
 import TimeSheetApp.BackEnd.ScreenManager;
 import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
-import TimeSheetApp.BackEnd.CustomTextField;
+import TimeSheetApp.FrontEnd.CustomFrontendThings.CustomTextField;
 
 import javax.swing.*;
 import java.awt.*;
