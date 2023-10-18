@@ -32,7 +32,7 @@ public class PasswordManager {
 
     public boolean verifyPassword(String enteredPassword, String storedPasswordHash) throws NoSuchAlgorithmException {
         // Recuperar o salt da senha armazenada
-        byte[] salt = Base64.getDecoder().decode(storedPasswordHash.substring(64)); // Assumindo que os primeiros 64 caracteres são o hash
+        byte[] salt = Base64.getDecoder().decode(storedPasswordHash.substring(64));
 
         // Concatenar o salt com a senha inserida pelo usuário
         String saltedPassword = enteredPassword + Base64.getEncoder().encodeToString(salt);

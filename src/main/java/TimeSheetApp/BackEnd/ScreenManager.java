@@ -4,10 +4,10 @@ import TimeSheetApp.BackEnd.PasswordManager.PasswordManager;
 import TimeSheetApp.BackEnd.SystemIntegration.CepInformation;
 import TimeSheetApp.BackEnd.SystemIntegration.CepInformationRec;
 import TimeSheetApp.BackEnd.SystemIntegration.PersonalDataInformation;
-import TimeSheetApp.FrontEnd.LoginScreen;
-import TimeSheetApp.FrontEnd.MenuScreen;
-import TimeSheetApp.FrontEnd.EntryScreen;
-import TimeSheetApp.FrontEnd.ChangeEntryScreen;
+import TimeSheetApp.FrontEnd.LoginAndMenuScreens.LoginScreen;
+import TimeSheetApp.FrontEnd.LoginAndMenuScreens.MenuScreen;
+import TimeSheetApp.FrontEnd.TsMgmtScreens.EntryScreen;
+import TimeSheetApp.FrontEnd.TsMgmtScreens.ChangeEntryScreen;
 import TimeSheetApp.FrontEnd.RegisterScreen.AddressDataRegisterScreen;
 import TimeSheetApp.FrontEnd.RegisterScreen.LoginDataRegisterScreen;
 import TimeSheetApp.FrontEnd.RegisterScreen.PersonalDataRegisterScreen;
@@ -23,6 +23,8 @@ public class ScreenManager {
     private LoginDataRegisterScreen loginDataRegisterScreen;
     private PersonalDataInformation personalDataInformation;
     private CepInformation cepInformation;
+
+    private String userCpf;
 
     private PasswordManager passwordManager;
 
@@ -58,6 +60,22 @@ public class ScreenManager {
         changeEntryScreen.setVisible(false);
         loginDataRegisterScreen.setVisible(false);
     }
+
+    public void showMenuScreenAndSetCpf(String cpf) {
+        // Mostra a tela do Menu e esconde as outras telas
+
+        loginScreen.setVisible(false);
+        entryScreen.setVisible(false);
+        addressDataRegisterScreen.setVisible(false);
+        menuScreen.setVisible(true);
+
+        personalDataRegisterScreen.setVisible(false);
+        changeEntryScreen.setVisible(false);
+        loginDataRegisterScreen.setVisible(false);
+    }
+
+
+
 
     public void showEntryScreen() {
         // Mostra a tela de Entrada e esconde as outras telas
@@ -140,6 +158,13 @@ public class ScreenManager {
     }
     public CepInformation getAddInfo(){return this.cepInformation;}
 
-    public CepInformation getCepInformation(){return this.cepInformation;}
+    public void setUserCpf(String cpf){
+        this.userCpf = userCpf;
+    }
+
+    public String getUserCpf(){
+        return userCpf;
+    }
+
 
 }

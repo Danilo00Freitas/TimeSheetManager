@@ -5,9 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
-import TimeSheetApp.BackEnd.DataBaseInteraction.DataBaseConnection;
+import TimeSheetApp.BackEnd.DataBaseInteraction.DbConnectionManager;
+import TimeSheetApp.BackEnd.DataBaseInteraction.DbLoginManager;
 import TimeSheetApp.BackEnd.InfoValidator;
 import TimeSheetApp.BackEnd.PasswordManager.PasswordManager;
 import TimeSheetApp.BackEnd.ScreenManager;
@@ -20,7 +20,9 @@ public class LoginDataRegisterScreen extends JFrame {
     private JButton registerButton;
     private JButton goBackButton;
     private ScreenManager screenManager;
-    private DataBaseConnection dataBaseConnection;
+
+    private DbLoginManager dbLoginManager;
+   /* private DbConnectionManager dataBaseConnection;*/
     private PersonalDataInformation personalDataInformation;
     private PasswordManager passwordManager;;
 
@@ -69,14 +71,15 @@ public class LoginDataRegisterScreen extends JFrame {
                 }else{
 
 
-                    dataBaseConnection = new DataBaseConnection();
+                    dbLoginManager = new DbLoginManager();
+
                     var pdi = screenManager.getPdi();
-                    dataBaseConnection.insertIntoEmployeeRegisterTable(pdi.getCpf(), pdi.getNome(), pdi.getSetor(),
+                    dbLoginManager.insertIntoEmployeeRegisterTable(pdi.getCpf(), pdi.getNome(), pdi.getSetor(),
                             pdi.getCargo(), pdi.getSuperior(), pdi.getRotinaDeTrabalho(),pdi.getGenero(),
                             pdi.getTelefone(),pdi.getDataDeNascimento());
 
                     var addressInfo = screenManager.getAddInfo();
-                    dataBaseConnection.insertIntoAddressTable(pdi.getCpf(),addressInfo.getCep(), addressInfo.getLogradouro(),
+                    dbLoginManager.insertIntoAddressTable(pdi.getCpf(),addressInfo.getCep(), addressInfo.getLogradouro(),
                             addressInfo.getNumero(), addressInfo.getComplemento(), addressInfo.getBairro(),
                             addressInfo.getLocalidade(), addressInfo.getUf());
 
@@ -87,7 +90,7 @@ public class LoginDataRegisterScreen extends JFrame {
                     try {
                         password = passwordManager.generatePassword(senhaDigitada);
                         byte[] salt = passwordManager.generateSalt();
-                        dataBaseConnection.insertIntologinRegisterTable(pdi.getCpf(),emailField.getText(), password, salt);
+                        dbLoginManager.insertIntologinRegisterTable(pdi.getCpf(),emailField.getText(), password, salt);
 
                     } catch (NoSuchAlgorithmException ex) {
                         throw new RuntimeException(ex);

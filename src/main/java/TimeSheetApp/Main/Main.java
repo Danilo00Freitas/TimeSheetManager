@@ -1,6 +1,5 @@
 package TimeSheetApp.Main;
 
-import TimeSheetApp.BackEnd.DataBaseInteraction.DataBaseConnection;
 import TimeSheetApp.BackEnd.ScreenManager;
 
 public class Main {
