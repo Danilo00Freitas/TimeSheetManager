@@ -29,9 +29,9 @@ public class ScreenManager {
     private PasswordManager passwordManager;
 
     public ScreenManager() {
-        // Inicializa os objetos das telas MenuScreen, EntryScreen e ChangeEntryScreen
+        // Inicializa os objetos das telas MenuScreen, EntryScreen e ChangeEntryScreen e passwordManager
 
-    passwordManager = new PasswordManager();
+        passwordManager = new PasswordManager();
         timeSheetManager = new TimeSheetManager();
         menuScreen = new MenuScreen(this);
         entryScreen = new EntryScreen(this, timeSheetManager);
@@ -48,6 +48,9 @@ public class ScreenManager {
         addressDataRegisterScreen = new AddressDataRegisterScreen(this);
 
         loginDataRegisterScreen = new LoginDataRegisterScreen(this, passwordManager);
+        this.userCpf = "";
+
+
     }
 
     public void showMenuScreen() {
@@ -152,19 +155,17 @@ public class ScreenManager {
     }
 
 
-
     public PersonalDataInformation getPdi(){
         return this.personalDataInformation;
     }
     public CepInformation getAddInfo(){return this.cepInformation;}
 
     public void setUserCpf(String cpf){
-
-        this.userCpf = userCpf;
+        this.userCpf = cpf;
     }
 
     public String getUserCpf(){
-        return userCpf;
+        return this.userCpf;
     }
 
 

@@ -6,7 +6,6 @@ import TimeSheetApp.BackEnd.PersonalizedTimer;
 import TimeSheetApp.BackEnd.ScreenManager;
 import TimeSheetApp.BackEnd.TimeSheetManager;
 import TimeSheetApp.FrontEnd.CustomFrontendThings.CustomTextField;
-import org.apache.poi.ss.formula.atp.Switch;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +25,7 @@ public class EntryScreen extends JFrame {
     private ScreenManager screenManager;
     private TimeSheetManager timeSheetManager;
     private int rowIndex = 0;
-    private String userCpf;
+
     private String[] options = {"Selecione","Entrada","intervalo","retorno do intervalo", "saída"};
    private String[] reasons = {"Selecione","Dia de trabalho normal","feriado", "hora extra"};
    private DbConnectionManager dataBaseConnection = new DbConnectionManager();
@@ -39,7 +38,7 @@ public class EntryScreen extends JFrame {
         // Inicializando o screemanager
         this.screenManager = screenManager;
         this.timeSheetManager = timeSheetManager;
-        this.userCpf = screenManager.getUserCpf();
+        var userCpf = screenManager.getUserCpf();
 
         // Configurar o layout do timerPane como GridLayout com 2 linhas e 1 coluna
         timerPane = new JPanel();
@@ -111,34 +110,22 @@ public class EntryScreen extends JFrame {
                 String currentJustification = justifyTxtField.getText();
                 String currentReason = (String) reasonOptions.getSelectedItem();
 
-                switch (currentType) {
-                    case "Entrada":
+                if (!dbClockInManager.verifyRegisterExistence(currentType,currentDate)){
+
+                    if(currentReason.equals("Selecione") || currentType.equals("Selecione")){
+                        JOptionPane.showMessageDialog(null,"Erro! \n Todos os campos devem estar preenchdidos.");
+                    }else{
                         try{
-                            System.out.println(userCpf);
-                        dbClockInManager.insertArrival(userCpf,currentDate,currentTime,currentType,currentJustification,currentReason);
+                            dbClockInManager.insertIntoTimeRecordsTable(screenManager.getUserCpf(),currentDate,currentTime,currentType,currentJustification,currentReason);
                         }catch (Exception exception){
                             JOptionPane.showMessageDialog(null,"Erro ao enviar batida de ponto");
                             System.out.println(exception);
                         }
-                        // Faça algo quando currentType for "Entrada"
-                        break;
-                    case "Intervalo":
-                        // Faça algo quando currentType for "Intervalo"
-                        break;
-                    case "Retorno":
-                        // Faça algo quando currentType for "Retorno"
-                        break;
-                    case "Saída":
-                        // Faça algo quando currentType for "Saída"
-                        break;
-                    default:
-                        // Se currentType não corresponder a nenhum dos casos
-                        // Faça algo para a situação padrão ou adicione uma mensagem de erro
-                        break;
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"Você ja adicionou uma batida de " + currentType +
+                            " na data de " + currentDate );
                 }
-
-
-                //adicionar logica para o botão de salvar
             }
         });
         returnToMenuBtn.addActionListener(new ActionListener() {

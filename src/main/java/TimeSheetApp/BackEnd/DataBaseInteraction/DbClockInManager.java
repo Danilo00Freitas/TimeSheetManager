@@ -1,6 +1,7 @@
 package TimeSheetApp.BackEnd.DataBaseInteraction;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DbClockInManager {
@@ -9,7 +10,7 @@ public class DbClockInManager {
     public DbClockInManager(){
     }
 
-    public void insertArrival(String cpf, String date, String time, String type, String justification, String reason) {
+    public void insertIntoTimeRecordsTable(String cpf, String date, String time, String type, String justification, String reason) {
 
         try {
             var connection = dbConnectionManager.newDataBaseConnection();
@@ -36,7 +37,28 @@ public class DbClockInManager {
         }
     }
 
+    public boolean verifyRegisterExistence(String type, String date){
+        try{
+            var connection = dbConnectionManager.newDataBaseConnection();
+            String query = "select cpf from timeRecordsTable where tipo = ? AND data = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,type);
+            preparedStatement.setString(1,date);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                connection.close();
+                return true;
+            }else {
+                connection.close();
+                return false;
+            }
 
+        }catch (Exception e){
 
+            System.out.println(e);
+            return true;
+        }
+    }
+    
 
 }

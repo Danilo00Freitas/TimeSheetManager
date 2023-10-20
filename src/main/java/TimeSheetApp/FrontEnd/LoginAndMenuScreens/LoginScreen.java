@@ -73,10 +73,10 @@ public class LoginScreen extends JFrame {
                 System.out.println(password);
 
                 if (dbLoginManager.verifyLogin(loginUserName, password)){
-                    JOptionPane.showMessageDialog(null,"Login realizado com sucesso!");
                     clearField();
                     screenManager.setUserCpf(dbLoginManager.getUserCpf());
                     screenManager.showMenuScreen();
+                    JOptionPane.showMessageDialog(null,"Login realizado com sucesso! \n" + screenManager.getUserCpf());
 
 
                 }else{
