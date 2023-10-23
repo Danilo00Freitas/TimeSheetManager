@@ -110,13 +110,14 @@ public class EntryScreen extends JFrame {
                 String currentJustification = justifyTxtField.getText();
                 String currentReason = (String) reasonOptions.getSelectedItem();
 
-                if (!dbClockInManager.verifyRegisterExistence(currentType,currentDate)){
+                if (!dbClockInManager.verifyRegisterExistence(screenManager.getUserCpf(),currentType,currentDate)){
 
                     if(currentReason.equals("Selecione") || currentType.equals("Selecione")){
                         JOptionPane.showMessageDialog(null,"Erro! \n Todos os campos devem estar preenchdidos.");
                     }else{
                         try{
                             dbClockInManager.insertIntoTimeRecordsTable(screenManager.getUserCpf(),currentDate,currentTime,currentType,currentJustification,currentReason);
+                            JOptionPane.showMessageDialog(null,"Batida enviada com sucesso");
                         }catch (Exception exception){
                             JOptionPane.showMessageDialog(null,"Erro ao enviar batida de ponto");
                             System.out.println(exception);

@@ -37,16 +37,18 @@ public class DbClockInManager {
         }
     }
 
-    public boolean verifyRegisterExistence(String type, String date){
+    public boolean verifyRegisterExistence(String cpf, String type, String date){
         try{
             var connection = dbConnectionManager.newDataBaseConnection();
-            String query = "select cpf from timeRecordsTable where tipo = ? AND data = ?";
+            String query = "select * from timeRecordsTable where cpf = ? AND tipo = ? AND data = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1,type);
-            preparedStatement.setString(1,date);
+            preparedStatement.setString(1, cpf);
+            preparedStatement.setString(2,type);
+            preparedStatement.setString(3,date);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
                 connection.close();
+                System.out.println(resultSet);
                 return true;
             }else {
                 connection.close();

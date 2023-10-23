@@ -4,6 +4,10 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.toedter.calendar.JDateChooser;
 
 public class CustomTextField extends JTextField {
 
@@ -24,18 +28,35 @@ public class CustomTextField extends JTextField {
         justificationTxtField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if(justificationTxtField.getText().equals("Insira a justificativa")){
+                if(justificationTxtField.getText().equals(text)){
                     justificationTxtField.setText("");
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
                 if(justificationTxtField.getText().equals("")){
-                    justificationTxtField.setText("Insira a justificativa");
+                    justificationTxtField.setText(text);
                 }
             }
         });
         return justificationTxtField;
     }
+
+    public JDateChooser personalizedDateChooser(){
+        JDateChooser dateChooser = new JDateChooser();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        dateChooser.setDateFormatString("dd/MM/yyyy");
+        Date initialDate = new Date();
+        dateChooser.setDate(initialDate);
+
+        // Obtém o campo de texto interno do JDateChooser
+        JTextField dateEditor = ((JTextField) dateChooser.getDateEditor().getUiComponent());
+
+        // Define o alinhamento do campo de texto para o centro
+        dateEditor.setHorizontalAlignment(JTextField.CENTER);
+
+        return dateChooser;
+    }
+
 }
 
