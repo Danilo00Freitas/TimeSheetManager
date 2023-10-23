@@ -67,10 +67,8 @@ public class CustomTextField extends JTextField {
             }
         });
 
-        // Obtém o campo de texto interno do JDateChooser
         JTextField dateEditor = ((JTextField) dateChooser.getDateEditor().getUiComponent());
 
-        // Define o alinhamento do campo de texto para o centro
         dateEditor.setHorizontalAlignment(JTextField.CENTER);
         return dateChooser;
     }

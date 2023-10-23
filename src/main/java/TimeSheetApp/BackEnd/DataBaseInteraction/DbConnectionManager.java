@@ -4,8 +4,10 @@ import java.sql.*;
 
 public class DbConnectionManager {
     private String url = "jdbc:mysql://localhost:3306/timeSheetDB";
-    private String usuario = "timeSheetManager";
-    private String senha = "testeAplicacao123@";
+
+    //Usuário e senha ocultados... faça contato com Danilo dos Santos Freitas
+    private String usuario = "";
+    private String senha = "";
 
 
     public DbConnectionManager() {

@@ -17,7 +17,6 @@ public class PersonalDataRegisterScreen extends JFrame {
     private JComboBox<String> sectorComboBox; // Usando JComboBox para a seleção de setor
     private JComboBox<String> positionComboBox;
     private JTextField immediateSupervisorField;
-    private JTextField workRoutineField;
     private JComboBox<String> genderComboBox;
     private JComboBox<String> wrkRoutComboBox;
     private JTextField phoneField;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TimeSheetManager {
-    private List<String> timeSheetRecorderList; // Declaração da lista
+    private List<String> timeSheetRecorderList;
     private Sheet sheet;
     private String excelDirPath;
     private String fileName = "PontoEletrônico.xlsx";
@@ -19,7 +19,7 @@ public class TimeSheetManager {
     private Workbook workbook;
 
     public TimeSheetManager() {
-        timeSheetRecorderList = new ArrayList<>(); // Inicialização da lista
+        timeSheetRecorderList = new ArrayList<>();
         excelDirPath = System.getProperty("user.dir");
         filePath = excelDirPath + File.separator + fileName;
 

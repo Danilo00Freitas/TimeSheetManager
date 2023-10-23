@@ -9,7 +9,6 @@ public class DbClockInManager {
 
     public DbClockInManager(){
     }
-
     public void insertIntoTimeRecordsTable(String cpf, String date, String time, String type, String justification, String reason) {
 
         try {
@@ -75,8 +74,8 @@ public class DbClockInManager {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()){
-                String horario = resultSet.getString("horario"); // Recupere o horário
-                connection.close(); // Feche a conexão após recuperar os dados
+                String horario = resultSet.getString("horario");
+                connection.close();
                 System.out.println("Horário encontrado: " + horario);
                 return horario;
 

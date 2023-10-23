@@ -40,13 +40,11 @@ public class EntryScreen extends JFrame {
         this.timeSheetManager = timeSheetManager;
         var userCpf = screenManager.getUserCpf();
 
-        // Configurar o layout do timerPane como GridLayout com 2 linhas e 1 coluna
         timerPane = new JPanel();
         timerPane.setLayout(new GridLayout(2, 1));
         dateTextF = new JTextField();
         timetextF = new JTextField();
 
-        // Adicionar os componentes ao timerPane/container
         timerPane.add(dateTextF);
         timerPane.add(timetextF);
         Font font = new Font("Verdana", Font.PLAIN, 50);
@@ -90,15 +88,14 @@ public class EntryScreen extends JFrame {
         buttonPanel.add(returnToMenuBtn);
         mainPanel.add(buttonPanel);
 
-        // Configurar a janela e torná-la visível
-        setPreferredSize(new Dimension(600, 400)); // Defina o tamanho preferido desejado
+        setPreferredSize(new Dimension(600, 400));
         pack();
-        setLocationRelativeTo(null); // Centralizar a janela na tela
+        setLocationRelativeTo(null);
         setResizable(false);
 
-        // Inicializar a interface
+
         initializeUI();
-        // Adicionando ação aos botões
+
 
         saveBtn.addActionListener(new ActionListener() {
             @Override

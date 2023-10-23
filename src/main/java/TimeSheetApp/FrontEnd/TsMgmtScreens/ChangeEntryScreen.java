@@ -200,7 +200,6 @@ public class ChangeEntryScreen extends JFrame {
             }
         });
 
-        // Adicione outro preenchedor para ocupar espaço extra abaixo dos botões
         JPanel bottomFiller = new JPanel();
         GridBagConstraints bottomFillerConstraints = new GridBagConstraints();
         bottomFillerConstraints.weighty = 0.0;

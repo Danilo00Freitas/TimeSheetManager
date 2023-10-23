@@ -22,10 +22,8 @@ public class LoginDataRegisterScreen extends JFrame {
     private ScreenManager screenManager;
 
     private DbLoginManager dbLoginManager;
-   /* private DbConnectionManager dataBaseConnection;*/
     private PersonalDataInformation personalDataInformation;
     private PasswordManager passwordManager;;
-
 
     public LoginDataRegisterScreen(ScreenManager screenManager, PasswordManager passwordManager) {
         // Inicializando o gerenciador de tela

@@ -33,3 +33,6 @@ dependency-reduced-pom.xml
 # Outros arquivos temporários
 *.bak
 *.~    
+
+
+/out

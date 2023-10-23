@@ -43,14 +43,11 @@ public class ScreenManager {
                 "","","","");
 
         CepInformationRec cepInformationRec = new CepInformationRec("","","","","","");
-        CepInformation cepInformation= new CepInformation(cepInformationRec);
 
         addressDataRegisterScreen = new AddressDataRegisterScreen(this);
 
         loginDataRegisterScreen = new LoginDataRegisterScreen(this, passwordManager);
         this.userCpf = "";
-
-
     }
 
     public void showMenuScreen() {

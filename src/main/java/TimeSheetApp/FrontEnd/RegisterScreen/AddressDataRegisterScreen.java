@@ -132,8 +132,6 @@ public class AddressDataRegisterScreen extends JFrame {
                 }catch (Exception exception){
                     JOptionPane.showMessageDialog(null, "Erro: " + exception.getMessage(), "Exceção", JOptionPane.ERROR_MESSAGE);
                 }
-
-
             }
         });
 
