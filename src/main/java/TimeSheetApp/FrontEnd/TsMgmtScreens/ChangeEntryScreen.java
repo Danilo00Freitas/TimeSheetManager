@@ -1,6 +1,7 @@
 package TimeSheetApp.FrontEnd.TsMgmtScreens;
 
 import TimeSheetApp.BackEnd.DataBaseInteraction.DbClockInManager;
+import TimeSheetApp.BackEnd.InfoValidator;
 import TimeSheetApp.BackEnd.ScreenManager;
 import TimeSheetApp.BackEnd.TimeSheetManager;
 import TimeSheetApp.FrontEnd.CustomFrontendThings.CustomTextField;
@@ -24,7 +25,7 @@ public class ChangeEntryScreen extends JFrame {
     private DbClockInManager dbClockInManager = new DbClockInManager();
 
     private ArrayList<String> tempEntry = new ArrayList<>();
-    private EntryValidator entryValidator = new EntryValidator();
+    private InfoValidator infoValidator = new InfoValidator();
 
     public ChangeEntryScreen(ScreenManager screenManager, TimeSheetManager timeSheetManager) {
         this.screenManager = screenManager;
@@ -121,7 +122,6 @@ public class ChangeEntryScreen extends JFrame {
                         String formattedDate = dateFormat.format(selectedDate);
                         System.out.println("Data selecionada: " + formattedDate);
 
-
                         // Coloque aqui a ação que deseja executar quando uma data for selecionada
                         setArrivalTxtField.setText(dbClockInManager.getRegisters(screenManager.getUserCpf(), "Entrada",formattedDate));
                         tempEntry.add(setArrivalTxtField.getText());
@@ -150,10 +150,9 @@ public class ChangeEntryScreen extends JFrame {
                 String currentBreakReturn = setBreakReturnTxtField.getText();
                 String currentExit = setExitTxtField.getText();
 
-
                 try{
 
-                    if (entryValidator.validateTimeEntrys(currentArrival, currentbreak, currentBreakReturn, currentExit)){
+                    if (infoValidator.validateTimeEntrys(currentArrival, currentbreak, currentBreakReturn, currentExit)){
                         if(!tempEntry.isEmpty()){
                             if (!currentArrival.equals(tempEntry.get(0))){
                                 dbClockInManager.updateTimeRegister(screenManager.getUserCpf(),currentFormatedDate,currentArrival,"Entrada");
@@ -172,8 +171,11 @@ public class ChangeEntryScreen extends JFrame {
                         }else{
                             JOptionPane.showMessageDialog(null,"Voce precisa ter modificado o ponto para poder salvar as alterações");
                         }
+
+                        dateChooser.setDate(null);
                     }else{
                         JOptionPane.showMessageDialog(null,"Data inválida");
+                        dateChooser.cleanup();
                     }
 
 
@@ -193,6 +195,7 @@ public class ChangeEntryScreen extends JFrame {
         returnToMenuScreenBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dateChooser.setDate(null);
                 screenManager.showMenuScreen();
             }
         });
