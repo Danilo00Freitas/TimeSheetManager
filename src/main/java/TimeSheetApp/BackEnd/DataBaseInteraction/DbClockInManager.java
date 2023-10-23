@@ -61,6 +61,57 @@ public class DbClockInManager {
             return true;
         }
     }
-    
+
+    public String getRegisters(String cpf, String type, String date){
+
+        try{
+            var connection = dbConnectionManager.newDataBaseConnection();
+            String query = "select horario from timeRecordsTable where cpf = ? AND tipo = ? AND data = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, cpf);
+            preparedStatement.setString(2,type);
+            preparedStatement.setString(3,date);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                String horario = resultSet.getString("horario"); // Recupere o horário
+                connection.close(); // Feche a conexão após recuperar os dados
+                System.out.println("Horário encontrado: " + horario);
+                return horario;
+
+            }else {
+                connection.close();
+                return "";
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            return "";
+        }
+    }
+
+    public void updateTimeRegister(String cpf, String date, String time, String type){
+        try {
+            var connection = dbConnectionManager.newDataBaseConnection();
+
+            String query = "UPDATE timeRecordsTable SET horario = ? WHERE cpf = ? AND data = ? AND tipo = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            // Define os valores usando placeholders
+            preparedStatement.setString(1, time);
+            preparedStatement.setString(2, cpf);
+            preparedStatement.setString(3, date);
+            preparedStatement.setString(4, type);
+
+            // Executa a inserção
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("Linhas afetadas: " + rowsAffected);
+
+            // Fecha a conexão
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

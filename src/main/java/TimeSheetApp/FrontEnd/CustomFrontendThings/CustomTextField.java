@@ -46,17 +46,35 @@ public class CustomTextField extends JTextField {
         JDateChooser dateChooser = new JDateChooser();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         dateChooser.setDateFormatString("dd/MM/yyyy");
-        Date initialDate = new Date();
-        dateChooser.setDate(initialDate);
+
+        JTextField dateTextField = (JTextField) dateChooser.getDateEditor().getUiComponent();
+        dateTextField.setText("Escolha uma data");
+        dateTextField.setForeground(Color.GRAY);
+        dateTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (dateTextField.getText().equals("Insira uma data")) {
+                    dateTextField.setText("");
+                    dateTextField.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (dateTextField.getText().isEmpty()) {
+                    dateTextField.setText("Insira uma data");
+                    dateTextField.setForeground(Color.GRAY);
+                }
+            }
+        });
 
         // Obtém o campo de texto interno do JDateChooser
         JTextField dateEditor = ((JTextField) dateChooser.getDateEditor().getUiComponent());
 
         // Define o alinhamento do campo de texto para o centro
         dateEditor.setHorizontalAlignment(JTextField.CENTER);
-
         return dateChooser;
     }
+
 
 }
 

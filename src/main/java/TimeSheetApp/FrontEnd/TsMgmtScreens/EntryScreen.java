@@ -26,8 +26,8 @@ public class EntryScreen extends JFrame {
     private TimeSheetManager timeSheetManager;
     private int rowIndex = 0;
 
-    private String[] options = {"Selecione","Entrada","intervalo","retorno do intervalo", "saída"};
-   private String[] reasons = {"Selecione","Dia de trabalho normal","feriado", "hora extra"};
+    private String[] options = {"Selecione","Entrada","Intervalo","Retorno do intervalo", "Saída"};
+   private String[] reasons = {"Selecione","Dia de trabalho normal","Feriado", "Hora extra"};
    private DbConnectionManager dataBaseConnection = new DbConnectionManager();
    private DbClockInManager dbClockInManager = new DbClockInManager();
 
